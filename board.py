@@ -1,6 +1,8 @@
 from ship import SHIP_TYPE_TO_SIZE, Ship
 
 
+BOARD_SIZE = 10
+
 HIT = "X"
 MISS = "O"
 EMPTY = "-"
@@ -9,7 +11,7 @@ SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
 
 
 class Board:
-    def __init__(self, size: int = 10):
+    def __init__(self, size: int = BOARD_SIZE):
         self.size = size
         self.grid = [['-' for i in range(size)] for j in range(size)]
         self.ships = [Ship(type) for type in SHIP_TYPES]
@@ -39,7 +41,7 @@ class Board:
             guess = (int(guess[0]), int(guess[1]))
             if guess in guessed_coords:
                 print('You already guessed that, try again')
-            elif guess[0] not in range(10) or guess[1] not in range(10):
+            elif guess[0] not in range(BOARD_SIZE) or guess[1] not in range(BOARD_SIZE):
                 print('Invalid guess, try again')
             else:
                 return guess

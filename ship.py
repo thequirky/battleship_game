@@ -31,9 +31,10 @@ class Ship:
             board[pos.x][pos.y+i] = self.name[0]
             if self.coords is None:
                 self.coords = [(pos.x, pos.y+i)]
-            self.coords.append((pos.x, pos.y+i))
+            else:
+                self.coords.append((pos.x, pos.y+i))
 
-    def _place_vertically(self, pos: Position, board):
+    def place_vertically(self, pos: Position, board):
         for i in range(self.size):
             board[pos.x+i][pos.y] = self.name[0]
             if self.coords is None:
@@ -47,9 +48,9 @@ class Ship:
 
             if self.is_valid_placement(board, pos, orientation):
                 if orientation == Orientation.HORIZONTAL:
-                    self._place_horizontally(pos, board)
+                    self.place_horizontally(pos, board)
                 else:
-                    self._place_vertically(pos, board)
+                    self.place_vertically(pos, board)
                 break
 
     def is_valid_placement(self, board, pos: Position, orientation: Orientation):

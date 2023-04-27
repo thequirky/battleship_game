@@ -1,11 +1,18 @@
 from ship import SHIP_TYPE_TO_SIZE, Ship
 
 
+HIT = "X"
+MISS = "O"
+EMPTY = "-"
+
+SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
+
+
 class Board:
     def __init__(self, size: int = 10):
         self.size = size
         self.grid = [['-' for i in range(size)] for j in range(size)]
-        self.ships = [Ship(type) for type in SHIP_TYPE_TO_SIZE.keys()]
+        self.ships = [Ship(type) for type in SHIP_TYPES]
 
     def print_board(self, show_ships=False):
         print('   0 1 2 3 4 5 6 7 8 9')
@@ -14,11 +21,11 @@ class Board:
             for j in range(self.size):
                 if show_ships:
                     row += self.grid[i][j] + ' '
+                    continue
+                if self.grid[i][j] == EMPTY or self.grid[i][j] in [HIT, MISS]:
+                    row += self.grid[i][j] + ' '
                 else:
-                    if self.grid[i][j] == '-' or self.grid[i][j] in ['X', 'O']:
-                        row += self.grid[i][j] + ' '
-                    else:
-                        row += '- '
+                    row += EMPTY + " "
             print(row)
 
     def place_all_ships(self):
@@ -40,15 +47,15 @@ class Board:
     def process_guess(self, guess):
         x, y = guess
 
-        if self.grid[x][y] == '-':
+        if self.grid[x][y] == EMPTY:
             print('Miss!')
-            self.grid[x][y] = 'O'
+            self.grid[x][y] = MISS
             return
 
         for ship in self.ships:
             if guess in ship.coords:
                 ship.hits.append(guess)
-                self.grid[x][y] = 'X'
+                self.grid[x][y] = HIT
                 print('Hit!')
                 if ship.is_sunk():
                     print(f'{ship.name} has been sunk!')

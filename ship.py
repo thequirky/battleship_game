@@ -23,17 +23,21 @@ class Ship:
     def __init__(self, type: str):
         self.name = type
         self.size = SHIP_TYPE_TO_SIZE[type]
-        self.coords = []
+        self.coords = None
         self.hits = []
 
     def _place_horizontally(self, pos: Position, board):
         for i in range(self.size):
             board[pos.x][pos.y+i] = self.name[0]
+            if self.coords is None:
+                self.coords = [(pos.x, pos.y+i)]
             self.coords.append((pos.x, pos.y+i))
 
     def _place_vertically(self, pos: Position, board):
         for i in range(self.size):
             board[pos.x+i][pos.y] = self.name[0]
+            if self.coords is None:
+                self.coords = [(pos.x+i, pos.y)]
             self.coords.append((pos.x+i, pos.y))
 
     def place_ship(self, board):

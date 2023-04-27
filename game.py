@@ -6,10 +6,10 @@ class Game:
         self.guessed_coords = []
         self.board = Board()
 
-    def run(self):
+    def run(self) -> None:
 
         self.board.place_all_ships()
-        self.board.print_board(show_ships=True)
+        self.board.print_board(show_ships=False)
 
         while True:
             guess = self.board.get_valid_guess(self.guessed_coords)

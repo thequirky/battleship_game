@@ -26,7 +26,7 @@ class Ship:
         self.coords = None
         self.hits = []
 
-    def _place_horizontally(self, pos: Position, board):
+    def place_horizontally(self, pos: Position, board):
         for i in range(self.size):
             board[pos.x][pos.y+i] = self.name[0]
             if self.coords is None:

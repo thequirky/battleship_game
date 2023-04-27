@@ -4,14 +4,14 @@ from ship import SHIP_TYPE_TO_SIZE, Ship
 class Board:
     def __init__(self, size: int = 10):
         self.size = size
-        self.grid = [['-' for i in range(10)] for j in range(10)]
+        self.grid = [['-' for i in range(size)] for j in range(size)]
         self.ships = [Ship(type) for type in SHIP_TYPE_TO_SIZE.keys()]
 
     def print_board(self, show_ships=False):
         print('   0 1 2 3 4 5 6 7 8 9')
-        for i in range(10):
+        for i in range(self.size):
             row = str(i) + '  '
-            for j in range(10):
+            for j in range(self.size):
                 if show_ships:
                     row += self.grid[i][j] + ' '
                 else:

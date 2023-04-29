@@ -20,7 +20,7 @@ class Game:
             pos = Position(random.randint(0, 9), random.randint(0, 9))
             orientation = random.choice(list(Orientation))
 
-            if ship.is_valid_placement(self.board, pos, orientation):
+            if ship.can_place(self.board, pos, orientation):
                 if orientation == Orientation.HORIZONTAL:
                     ship.place_horizontally(pos, self.board)
                 else:

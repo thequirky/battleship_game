@@ -47,22 +47,27 @@ class Ship:
             board.set_value(new_pos, self.type.value)
             self.coords.append(new_pos)
 
-    def is_valid_placement(self, board: Board, pos: Position, orientation: Orientation):
+    def can_place_vertically(self, board: Board, pos: Position):
+        can_fit = pos.x + self.size < board.size
+        if not can_fit:
+            return False
+        positions = [Position(pos.x, pos.y+i) for i in range(self.size)]
+        no_obstacle = all(board.get_value(pos) == cs.EMPTY for pos in positions)
+        return no_obstacle
+    
+    def can_place_horizontally(self, board: Board, pos: Position):
+        can_fit = pos.y + self.size < board.size
+        if not can_fit:
+            return False
+        positions = [Position(pos.x+i, pos.y) for i in range(self.size)]
+        no_obstacle = all(board.get_value(pos) == cs.EMPTY for pos in positions)
+        return no_obstacle
+
+    def can_place(self, board: Board, pos: Position, orientation: Orientation):
         if orientation == Orientation.HORIZONTAL:
-            if pos.y + self.size > 10:
-                return False
-            for i in range(self.size):
-                pos_to_check = Position(pos.x, pos.y+i)
-                if board.get_value(pos_to_check) != cs.EMPTY.value:
-                    return False
+            return self.can_place_horizontally(board, pos)
         else:
-            if pos.x + self.size > 10:
-                return False
-            for i in range(self.size):
-                pos_to_check = Position(pos.x+i, pos.y)
-                if board.get_value(pos_to_check) != cs.EMPTY.value:
-                    return False
-        return True
+            return self.can_place_vertically(board, pos)
 
     def is_sunk(self):
         return len(self.hits) == self.size

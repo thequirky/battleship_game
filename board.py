@@ -28,14 +28,25 @@ class Board:
             for y in range(self.size):
                 pos = Position(x,y)
                 cell_value = self.get_value(pos)
-                if (cell_value == cs.EMPTY or 
-                    cell_value in [cs.HIT, cs.MISS]):
-                    row += str(cell_value) + SPACE
-                else:
-                    row += str(cs.EMPTY) + SPACE
+                row += str(cell_value) + SPACE
             brd_str += "\n" + row
         return brd_str
 
+
+    # def __str__(self):
+    #     brd_str = GAP + SPACE + SPACE.join(str(idx) for idx in range(self.size))
+    #     for x in range(self.size):
+    #         row = str(x) + GAP
+    #         for y in range(self.size):
+    #             pos = Position(x,y)
+    #             cell_value = self.get_value(pos)
+    #             if (cell_value == cs.EMPTY or 
+    #                 cell_value in [cs.HIT, cs.MISS]):
+    #                 row += str(cell_value) + SPACE
+    #             else:
+    #                 row += str(cs.EMPTY) + SPACE
+    #         brd_str += "\n" + row
+    #     return brd_str
 
 if __name__ == "__main__":
     brd = Board(size=8)

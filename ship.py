@@ -36,16 +36,16 @@ class Ship:
         self.hits = []
 
     def place_horizontally(self, pos: Position, board: Board):
-        for i in range(self.size):
-            new_pos = Position(pos.x, pos.y+i)
-            board.set_value(new_pos, self.type.value)
-            self.coords.append(new_pos)
+        positions = [Position(pos.x, pos.y+i) for i in range(self.size)]
+        for p in positions:
+            board.set_value(p, self.type.value)
+            self.coords.append(p)
 
     def place_vertically(self, pos: Position, board: Board):
-        for i in range(self.size):
-            new_pos = Position(pos.x+i, pos.y)
-            board.set_value(new_pos, self.type.value)
-            self.coords.append(new_pos)
+        positions = [Position(pos.x+i, pos.y) for i in range(self.size)]
+        for p in positions:
+            board.set_value(p, self.type.value)
+            self.coords.append(p)
 
     def can_place_vertically(self, board: Board, pos: Position):
         can_fit = pos.x + self.size < board.size

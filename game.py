@@ -1,6 +1,7 @@
 import random
-from board import HIT, MISS, Board
-from ship import Orientation, Position, Ship, SHIP_TYPES
+from board import BOARD_SIZE, Board
+from cell import CellState, Position
+from ship import Orientation, Ship, SHIP_TYPES
 
 
 class Game:
@@ -26,15 +27,27 @@ class Game:
                     ship.place_vertically(pos, self.board)
                 break
 
+    def get_valid_guess(self):
+        while True:
+            guess = input('Enter your guess (row, column): ')
+            guess = guess.split(',')
+            guess = (int(guess[0]), int(guess[1]))
+            if guess in self.guessed_coords:
+                print('You already guessed that, try again')
+            elif guess[0] not in range(BOARD_SIZE) or guess[1] not in range(BOARD_SIZE):
+                print('Invalid guess, try again')
+            else:
+                return guess
+
     def process_guess(self, guess) -> str:
         if self.board.is_empty(guess):
-            self.board.set_value(guess, MISS)
+            self.board.set_value(guess, CellState.MISS.value)
             return "Miss!"
 
         for ship in self.ships:
             if guess in ship.coords:
                 ship.hits.append(guess)
-                self.board.set_value(guess, HIT)
+                self.board.set_value(guess, CellState.HIT.value)
                 msg = 'Hit!\n'
                 if ship.is_sunk():
                     msg += f'{ship.name} has been sunk!'
@@ -45,7 +58,7 @@ class Game:
         print(self.board)
 
         while True:
-            guess = self.board.get_valid_guess(self.guessed_coords)
+            guess = self.get_valid_guess()
             self.guessed_coords.append(guess)
             print(self.process_guess(guess))
             print(self.board)

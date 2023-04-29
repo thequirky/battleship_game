@@ -1,5 +1,7 @@
-from collections import namedtuple
 from enum import Enum, auto
+
+from board import Board
+from cell import Position
 
 
 class Orientation(Enum):
@@ -16,8 +18,6 @@ SHIP_TYPE_TO_SIZE = {
 }
 
 SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
-
-Position = namedtuple("Position", "x y")
 
 
 class Ship:
@@ -37,7 +37,7 @@ class Ship:
             board.grid[pos.x+i][pos.y] = self.name[0]
             self.coords.append((pos.x+i, pos.y))
 
-    def is_valid_placement(self, board, pos: Position, orientation: Orientation):
+    def is_valid_placement(self, board: Board, pos: Position, orientation: Orientation):
         if orientation == Orientation.HORIZONTAL:
             if pos.y + self.size > 10:
                 return False

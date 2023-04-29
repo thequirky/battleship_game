@@ -1,13 +1,8 @@
-from ship import SHIP_TYPE_TO_SIZE
-
-
 BOARD_SIZE = 10
 
 HIT = "X"
 MISS = "O"
 EMPTY = "-"
-
-SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
 
 SPACE = " "
 GAP = 2 * SPACE
@@ -18,7 +13,7 @@ class Board:
         self.size = size
         self.grid = [[EMPTY for _ in range(size)] for _ in range(size)]
 
-    def get_valid_guess(self, guessed_coords: list[tuple(int, int)]):
+    def get_valid_guess(self, guessed_coords: list):
         while True:
             guess = input('Enter your guess (row, column): ')
             guess = guess.split(',')

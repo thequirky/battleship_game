@@ -1,6 +1,6 @@
 import random
-from board import HIT, MISS, SHIP_TYPES, Board
-from ship import Orientation, Position, Ship
+from board import HIT, MISS, Board
+from ship import Orientation, Position, Ship, SHIP_TYPES
 
 
 class Game:

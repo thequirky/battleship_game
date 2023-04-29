@@ -15,9 +15,11 @@ SHIP_TYPE_TO_SIZE = {
     "Destroyer": 2,
 }
 
+SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
+
 Position = namedtuple("Position", "x y")
 
-    
+
 class Ship:
     def __init__(self, type: str):
         self.name = type
@@ -52,6 +54,3 @@ class Ship:
 
     def is_sunk(self):
         return len(self.hits) == self.size
-
-
-

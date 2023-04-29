@@ -50,7 +50,7 @@ class Game:
                 self.board.set_value(guess, cs.HIT.value)
                 msg = 'Hit!\n'
                 if ship.is_sunk():
-                    msg += f'{ship.name} has been sunk!'
+                    msg += f'{ship.type.name} has been sunk!'
         return msg
 
     def run(self) -> None:

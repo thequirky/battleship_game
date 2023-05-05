@@ -1,7 +1,6 @@
 import random
-from board import BOARD_SIZE, Board
-from cell import CellState as cs, Position
-from ship import Orientation, Ship, SHIP_TYPES
+from board import HIT, MISS, SHIP_TYPES, Board
+from ship import Orientation, Position, Ship
 
 
 class Game:

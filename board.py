@@ -1,7 +1,8 @@
-from cell import CellState as cs, Position
-
-
 BOARD_SIZE = 10
+
+HIT = "X"
+MISS = "O"
+EMPTY = "-"
 
 SPACE = " "
 GAP = 2 * SPACE
@@ -12,8 +13,21 @@ class Board:
         self.size = size
         self.grid = [[cs.EMPTY for _ in range(size)] for _ in range(size)]
 
-    def get_value(self, pos: Position) -> str:
-        return self.grid[pos.x][pos.y]
+    def get_valid_guess(self, guessed_coords: list):
+        while True:
+            guess = input('Enter your guess (row, column): ')
+            guess = guess.split(',')
+            guess = (int(guess[0]), int(guess[1]))
+            if guess in guessed_coords:
+                print('You already guessed that, try again')
+            elif guess[0] not in range(BOARD_SIZE) or guess[1] not in range(BOARD_SIZE):
+                print('Invalid guess, try again')
+            else:
+                return guess
+
+    def get_value(self, pos: tuple[str, str]) -> str:
+        x, y = pos
+        return self.grid[x][y]
     
     def set_value(self, pos: Position, value: str) -> None:
         self.grid[pos.x][pos.y] = value

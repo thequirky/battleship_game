@@ -1,11 +1,13 @@
 import random
-from board import HIT, MISS, SHIP_TYPES, Board
-from ship import Orientation, Position, Ship
+
+from board import Board, BOARD_SIZE
+from cell import Cell
+from ship import Orientation, Position, Ship, SHIP_TYPES
 
 
 class Game:
     def __init__(self) -> None:
-        self.guessed_coords : list [Position] = []
+        self.guessed_coords: list[Position] = []
         self.board = Board()
         self.ships = [Ship(type) for type in SHIP_TYPES]
         self.place_all_ships()
@@ -40,13 +42,13 @@ class Game:
 
     def process_guess(self, guess) -> str:
         if self.board.is_empty(guess):
-            self.board.set_value(guess, cs.MISS.value)
+            self.board.set_value(guess, Cell.MISS.value)
             return "Miss!"
 
         for ship in self.ships:
             if guess in ship.coords:
                 ship.hits.append(guess)
-                self.board.set_value(guess, cs.HIT.value)
+                self.board.set_value(guess, Cell.HIT.value)
                 msg = 'Hit!\n'
                 if ship.is_sunk():
                     msg += f'{ship.type.name} has been sunk!'

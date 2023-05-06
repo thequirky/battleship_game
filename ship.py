@@ -1,7 +1,7 @@
 from enum import Enum, auto
 
-from board import Board
-from cell import CellState as cs, Position
+from board import Board, Position
+from cell import Cell
 
 
 class Orientation(Enum):
@@ -10,11 +10,11 @@ class Orientation(Enum):
 
 
 class ShipType(Enum):
-    Carrier = "C"
-    Battleship = "B"
-    Cruiser = "C"
-    Submarine = "S"
-    Destroyer = "D"
+    Carrier = auto()
+    Battleship = auto()
+    Cruiser = auto()
+    Submarine = auto()
+    Destroyer = auto()
 
 
 SHIP_TYPE_TO_SIZE = {
@@ -25,24 +25,23 @@ SHIP_TYPE_TO_SIZE = {
     ShipType.Destroyer: 2,
 }
 
-Position = namedtuple("Position", "x y")
+SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
 
-    
 class Ship:
-    def __init__(self, type: str):
+    def __init__(self, type: Enum):
         self.type = type
         self.size = SHIP_TYPE_TO_SIZE[type]
-        self.coords = []
-        self.hits = []
+        self.coords: list[Position] = []
+        self.hits: list[Position] = []
 
     def place_horizontally(self, pos: Position, board: Board):
-        positions = [Position(pos.x, pos.y+i) for i in range(self.size)]
+        positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
         for p in positions:
             board.set_value(p, self.type.value)
             self.coords.append(p)
 
     def place_vertically(self, pos: Position, board: Board):
-        positions = [Position(pos.x+i, pos.y) for i in range(self.size)]
+        positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
         for p in positions:
             board.set_value(p, self.type.value)
             self.coords.append(p)
@@ -51,16 +50,16 @@ class Ship:
         can_fit = pos.x + self.size < board.size
         if not can_fit:
             return False
-        positions = [Position(pos.x, pos.y+i) for i in range(self.size)]
-        no_obstacle = all(board.get_value(pos) == cs.EMPTY for pos in positions)
+        positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
+        no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
-    
+
     def can_place_horizontally(self, board: Board, pos: Position):
         can_fit = pos.y + self.size < board.size
         if not can_fit:
             return False
-        positions = [Position(pos.x+i, pos.y) for i in range(self.size)]
-        no_obstacle = all(board.get_value(pos) == cs.EMPTY for pos in positions)
+        positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
+        no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
 
     def can_place(self, board: Board, pos: Position, orientation: Orientation):
@@ -72,5 +71,13 @@ class Ship:
     def is_sunk(self):
         return len(self.hits) == self.size
 
+    def __repr__(self):
+        return f"Ship(type={self.type}, size={self.size}, coords={self.coords}, hits={self.hits})"
+
+    def __str__(self):
+        return self.__repr__()
 
 
+if __name__ == "__main__":
+    ship = Ship(ShipType.Battleship)
+    print(ship)

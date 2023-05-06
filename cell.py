@@ -1,11 +1,7 @@
-from collections import namedtuple
 from enum import Enum
 
 
-Position = namedtuple("Position", "x y")
-
-
-class CellState(Enum):
+class Cell(Enum):
     HIT = "X"
     MISS = "O"
     EMPTY = "-"
@@ -15,7 +11,5 @@ class CellState(Enum):
 
 
 if __name__ == "__main__":
-    cell = CellState.HIT
+    cell = Cell.HIT
     print(cell)
-    pos = Position(x=1, y=0)
-    print(pos)

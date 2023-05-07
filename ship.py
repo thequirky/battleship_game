@@ -44,13 +44,14 @@ class Ship:
             self.coords.append(p)
 
     def can_place(self, board: Board, pos: Position, orientation: Orientation) -> bool:
-        can_fit = (pos.x + self.size < board.size) or (pos.y + self.size < board.size)
-        if not can_fit:
-            return False
-        if orientation == Orientation.VERTICAL:
+        can_fit_vertically = pos.x + self.size < board.size
+        can_fit_horizontally = pos.y + self.size < board.size
+        if orientation == Orientation.VERTICAL and can_fit_vertically:
             positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
-        else:
+        elif orientation == Orientation.HORIZONTAL and can_fit_horizontally:
             positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
+        else:
+            return False
         has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return has_no_obstacles
 

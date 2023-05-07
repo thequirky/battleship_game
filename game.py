@@ -1,7 +1,6 @@
 import random
 
-from board import Board, BOARD_SIZE
-from cell import Cell
+from board import Board, BOARD_SIZE, Cell
 from ship import Orientation, Position, Ship, SHIP_TYPES
 
 
@@ -28,27 +27,28 @@ class Game:
                     ship.place_vertically(pos, self.board)
                 break
 
-    def get_valid_guess(self) -> Position:
+    def get_valid_guess(self, already_guessed: list) -> Position:
         while True:
-            guess = input('Enter your guess (row, column): ')
-            guess = guess.split(',')
-            guess = Position(int(guess[0]), int(guess[1]))
-            if guess in self.guessed_coords:
+            x = input('Enter your row guess: ')
+            y = input('Enter your column guess: ')
+            x, y = int(x), int(y)
+            guess = Position(x, y)
+            if guess in already_guessed:
                 print('You already guessed that, try again')
-            elif guess[0] not in range(BOARD_SIZE) or guess[1] not in range(BOARD_SIZE):
+            elif x > BOARD_SIZE - 1 or y > BOARD_SIZE - 1:
                 print('Invalid guess, try again')
             else:
                 return guess
 
     def process_guess(self, guess) -> str:
         if self.board.is_empty(guess):
-            self.board.set_value(guess, Cell.MISS.value)
+            self.board.set_value(guess, Cell.MISS)
             return "Miss!"
 
         for ship in self.ships:
             if guess in ship.coords:
                 ship.hits.append(guess)
-                self.board.set_value(guess, Cell.HIT.value)
+                self.board.set_value(guess, Cell.HIT)
                 msg = 'Hit!\n'
                 if ship.is_sunk():
                     msg += f'{ship.type.name} has been sunk!'
@@ -59,7 +59,7 @@ class Game:
         print(self.board)
 
         while True:
-            guess = self.get_valid_guess()
+            guess = self.get_valid_guess(self.guessed_coords)
             self.guessed_coords.append(guess)
             print(self.process_guess(guess))
             print(self.board)

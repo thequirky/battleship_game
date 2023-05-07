@@ -1,17 +1,17 @@
 from collections import namedtuple
-
-from cell import Cell
+from enum import Enum
 
 BOARD_SIZE = 10
-
-# HIT = "X"
-# MISS = "O"
-# EMPTY = "-"
-
 SPACE = " "
 GAP = 2 * SPACE
 
 Position = namedtuple("Position", "x y")
+
+
+class Cell(Enum):
+    HIT = "X"
+    MISS = "O"
+    EMPTY = "-"
 
 
 class Board:
@@ -19,38 +19,15 @@ class Board:
         self.size = size
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
-    def get_valid_guess(self, guessed_coords: list):
-        while True:
-            guess = input('Enter your guess (row, column): ')
-            guess = guess.split(',')
-            guess = (int(guess[0]), int(guess[1]))
-            if guess in guessed_coords:
-                print('You already guessed that, try again')
-            elif guess[0] not in range(BOARD_SIZE) or guess[1] not in range(BOARD_SIZE):
-                print('Invalid guess, try again')
-            else:
-                return guess
-
     def get_value(self, pos: Position) -> Cell:
-        x, y = pos
-        return self.grid[x][y]
+       x, y = pos
+       return self.grid[x][y]
 
-    def set_value(self, pos: Position, value: str) -> None:
+    def set_value(self, pos: Position, value: Cell) -> None:
         self.grid[pos.x][pos.y] = value
 
     def is_empty(self, guess: Position) -> bool:
         return self.get_value(guess) == Cell.EMPTY
-
-    # def __str__(self):
-    #     brd_str = GAP + SPACE + SPACE.join(str(idx) for idx in range(self.size))
-    #     for x in range(self.size):
-    #         row = str(x) + GAP
-    #         for y in range(self.size):
-    #             pos = Position(x,y)
-    #             cell_value = self.get_value(pos)
-    #             row += str(cell_value) + SPACE
-    #         brd_str += "\n" + row
-    #     return brd_str
 
     def __str__(self):
         brd_str = GAP + SPACE + SPACE.join(str(idx) for idx in range(self.size))
@@ -61,9 +38,9 @@ class Board:
                 cell_value = self.get_value(pos)
                 if (cell_value == Cell.EMPTY or
                         cell_value in [Cell.HIT, Cell.MISS]):
-                    row += str(cell_value) + SPACE
+                    row += cell_value.value + SPACE
                 else:
-                    row += str(Cell.EMPTY.value) + SPACE
+                    row += Cell.EMPTY.value + SPACE
             brd_str += "\n" + row
         return brd_str
 

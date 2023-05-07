@@ -1,7 +1,6 @@
 from enum import Enum, auto
 
-from board import Board, Position
-from cell import Cell
+from board import Board, Position, Cell
 
 
 class Orientation(Enum):
@@ -27,6 +26,7 @@ SHIP_TYPE_TO_SIZE = {
 
 SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
 
+
 class Ship:
     def __init__(self, type: Enum):
         self.type = type
@@ -50,7 +50,7 @@ class Ship:
         can_fit = pos.x + self.size < board.size
         if not can_fit:
             return False
-        positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
+        positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
         no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
 
@@ -58,7 +58,7 @@ class Ship:
         can_fit = pos.y + self.size < board.size
         if not can_fit:
             return False
-        positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
+        positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
         no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
 

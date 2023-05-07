@@ -34,14 +34,11 @@ class Ship:
         self.coords: list[Position] = []
         self.hits: list[Position] = []
 
-    def place_horizontally(self, pos: Position, board: Board):
-        positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
-        for p in positions:
-            board.set_value(p, self.type.value)
-            self.coords.append(p)
-
-    def place_vertically(self, pos: Position, board: Board) -> bool:
-        positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
+    def place(self, pos: Position, board: Board, orientation: Orientation) -> None:
+        if orientation == Orientation.HORIZONTAL:
+            positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
+        else:
+            positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
         for p in positions:
             board.set_value(p, self.type.value)
             self.coords.append(p)

@@ -21,10 +21,7 @@ class Game:
             orientation = random.choice(list(Orientation))
 
             if ship.can_place(self.board, pos, orientation):
-                if orientation == Orientation.HORIZONTAL:
-                    ship.place_horizontally(pos, self.board)
-                else:
-                    ship.place_vertically(pos, self.board)
+                ship.place(pos=pos, board=self.board, orientation=orientation)
                 break
 
     def get_valid_guess(self, already_guessed: list) -> Position:

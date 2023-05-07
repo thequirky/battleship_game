@@ -20,8 +20,7 @@ class Board:
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
     def get_value(self, pos: Position) -> Cell:
-       x, y = pos
-       return self.grid[x][y]
+       return self.grid[pos.x][pos.y]
 
     def set_value(self, pos: Position, value: Cell) -> None:
         self.grid[pos.x][pos.y] = value
@@ -36,8 +35,7 @@ class Board:
             for y in range(self.size):
                 pos = Position(x, y)
                 cell_value = self.get_value(pos)
-                if (cell_value == Cell.EMPTY or
-                        cell_value in [Cell.HIT, Cell.MISS]):
+                if cell_value == Cell.EMPTY or cell_value in [Cell.HIT, Cell.MISS]:
                     row += cell_value.value + SPACE
                 else:
                     row += Cell.EMPTY.value + SPACE

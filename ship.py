@@ -40,13 +40,13 @@ class Ship:
             board.set_value(p, self.type.value)
             self.coords.append(p)
 
-    def place_vertically(self, pos: Position, board: Board):
+    def place_vertically(self, pos: Position, board: Board) -> bool:
         positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
         for p in positions:
             board.set_value(p, self.type.value)
             self.coords.append(p)
 
-    def can_place_vertically(self, board: Board, pos: Position):
+    def can_place_vertically(self, board: Board, pos: Position) -> bool:
         can_fit = pos.x + self.size < board.size
         if not can_fit:
             return False
@@ -54,7 +54,7 @@ class Ship:
         no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
 
-    def can_place_horizontally(self, board: Board, pos: Position):
+    def can_place_horizontally(self, board: Board, pos: Position) -> bool:
         can_fit = pos.y + self.size < board.size
         if not can_fit:
             return False
@@ -62,7 +62,7 @@ class Ship:
         no_obstacle = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
         return no_obstacle
 
-    def can_place(self, board: Board, pos: Position, orientation: Orientation):
+    def can_place(self, board: Board, pos: Position, orientation: Orientation) -> bool:
         if orientation == Orientation.HORIZONTAL:
             return self.can_place_horizontally(board, pos)
         else:

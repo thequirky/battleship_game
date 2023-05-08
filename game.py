@@ -1,6 +1,6 @@
 import random
 
-from board import BOARD_SIZE, Board, Cell
+from board import Board, Cell
 from ship import Orientation, Position, Ship, SHIP_TYPES
 
 
@@ -39,7 +39,7 @@ class Game:
 
     def place_ship(self, ship: Ship) -> None:
         while True:
-            pos = Position(random.randint(0, 9), random.randint(0, 9))
+            pos = Position(random.randint(0, self.board.size - 1), random.randint(0, self.board.size - 1))
             orientation = random.choice(list(Orientation))
             if can_place_ship_on_board(ship=ship, board=self.board, pos=pos, orientation=orientation):
                 place_ship_on_board(ship=ship, pos=pos, board=self.board, orientation=orientation)
@@ -53,7 +53,7 @@ class Game:
             guess = Position(x, y)
             if guess in self.already_guessed:
                 print('You already guessed that, try again')
-            elif x > BOARD_SIZE - 1 or y > BOARD_SIZE - 1:
+            elif x > self.board.size - 1 or y > self.board.size - 1:
                 print('Invalid guess, try again')
             else:
                 return guess
@@ -82,3 +82,12 @@ class Game:
             if all(ship.is_sunk() for ship in self.ships):
                 print('Congratulations! You have sunk all the ships!')
                 break
+
+
+def main():
+    game = Game()
+    game.run()
+
+
+if __name__ == '__main__':
+    main()

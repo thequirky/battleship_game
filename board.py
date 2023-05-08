@@ -1,7 +1,6 @@
 from collections import namedtuple
 from enum import Enum
 
-BOARD_SIZE = 10
 SPACE = " "
 GAP = 2 * SPACE
 
@@ -15,7 +14,7 @@ class Cell(Enum):
 
 
 class Board:
-    def __init__(self, size: int = BOARD_SIZE):
+    def __init__(self, size: int = 10):
         self.size = size
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 

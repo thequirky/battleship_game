@@ -4,7 +4,7 @@ from board import Board, Cell
 from ship import Orientation, Position, Ship, SHIP_TYPES
 
 
-def place_ship_on_board(ship: Ship, pos: Position, board: Board, orientation: Orientation) -> None:
+def place_ship_on_position(ship: Ship, pos: Position, board: Board, orientation: Orientation) -> None:
     if orientation == Orientation.HORIZONTAL:
         positions = [Position(pos.x, pos.y + i) for i in range(ship.size)]
     else:
@@ -13,7 +13,7 @@ def place_ship_on_board(ship: Ship, pos: Position, board: Board, orientation: Or
         board.set_value(p, ship.type.value)
         ship.coords.append(p)
 
-def can_place_ship_on_board(ship: Ship, board: Board, pos: Position, orientation: Orientation) -> bool:
+def can_place_ship_on_position(ship: Ship, board: Board, pos: Position, orientation: Orientation) -> bool:
     can_fit_vertically = pos.x + ship.size < board.size
     can_fit_horizontally = pos.y + ship.size < board.size
     if orientation == Orientation.VERTICAL and can_fit_vertically:
@@ -25,6 +25,14 @@ def can_place_ship_on_board(ship: Ship, board: Board, pos: Position, orientation
     has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
     return has_no_obstacles
 
+def place_ship_randomly(ship: Ship, board: Board, pos: Position, orientation: Orientation) -> None:
+    while True:
+        pos = Position(random.randint(0, board.size - 1), random.randint(0, board.size - 1))
+        orientation = random.choice(list(Orientation))
+        if can_place_ship_on_position(ship=ship, board=board, pos=pos, orientation=orientation):
+            place_ship_on_position(ship=ship, pos=pos, board=board, orientation=orientation)
+            break
+
 
 class Game:
     def __init__(self) -> None:
@@ -35,15 +43,7 @@ class Game:
 
     def place_all_ships(self) -> None:
         for ship in self.ships:
-            self.place_ship(ship)
-
-    def place_ship(self, ship: Ship) -> None:
-        while True:
-            pos = Position(random.randint(0, self.board.size - 1), random.randint(0, self.board.size - 1))
-            orientation = random.choice(list(Orientation))
-            if can_place_ship_on_board(ship=ship, board=self.board, pos=pos, orientation=orientation):
-                place_ship_on_board(ship=ship, pos=pos, board=self.board, orientation=orientation)
-                break
+            place_ship_randomly(ship)
 
     def get_valid_guess(self) -> Position:
         while True:
@@ -62,7 +62,6 @@ class Game:
         if self.board.is_empty(guess):
             self.board.set_value(guess, Cell.MISS)
             return "Miss!"
-
         for ship in self.ships:
             if guess in ship.coords:
                 ship.hits.append(guess)

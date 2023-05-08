@@ -21,8 +21,8 @@ class Game:
             self.board.set_value(guess, Cell.MISS)
             return "Miss!"
         for ship in self.ships:
-            if guess in ship.coords:
-                ship.hits.append(guess)
+            if ship.is_hit(guess):
+                ship.add_hit(guess)
                 self.board.set_value(guess, Cell.HIT)
                 msg = 'Hit!\n'
                 if ship.is_sunk():

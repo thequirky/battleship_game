@@ -13,7 +13,7 @@ class Cell(Enum):
 
 
 class Board:
-    def __init__(self, size: int = 10):
+    def __init__(self, size: int = 10) -> None:
         self.size = size
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
@@ -26,7 +26,7 @@ class Board:
     def is_empty(self, guess: Position) -> bool:
         return self.get_value(guess) == Cell.EMPTY
 
-    def __str__(self):
+    def __str__(self) -> str:
         brd_str = GAP + SPACE + SPACE.join(str(idx) for idx in range(self.size))
         for x in range(self.size):
             row = str(x) + GAP
@@ -40,7 +40,7 @@ class Board:
             brd_str += "\n" + row
         return brd_str
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Board(size={self.size}, grid={self.grid})"
 
 

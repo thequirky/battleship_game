@@ -29,13 +29,21 @@ class Ship:
         self.coords: list[Position] = []
         self.hits: list[Position] = []
 
-    def is_sunk(self):
+    def is_sunk(self) -> bool:
         return len(self.hits) == self.size
 
-    def __repr__(self):
+    def is_hit(self, pos: Position) -> bool:
+        return pos in self.coords
+
+    def add_hit(self, pos: Position) -> None:
+        if not self.is_hit:
+            raise ValueError(f"Could not hit ship, ship not in {pos}")
+        self.hits.append(pos)
+
+    def __repr__(self) -> str:
         return f"Ship(type={self.type}, size={self.size}, coords={self.coords}, hits={self.hits})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__repr__()
 
 

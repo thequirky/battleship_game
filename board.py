@@ -18,7 +18,7 @@ class Board:
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
     def get_value(self, pos: Position) -> Cell:
-       return self.grid[pos.x][pos.y]
+        return self.grid[pos.x][pos.y]
 
     def set_value(self, pos: Position, value: Cell) -> None:
         self.grid[pos.x][pos.y] = value

@@ -37,7 +37,7 @@ class Ship:
 
     def add_hit(self, pos: Position) -> None:
         if not self.is_hit:
-            raise ValueError(f"Could not hit ship, ship not in {pos}")
+            raise ValueError(f"Could not hit ship, ship not in position {pos.x}, {pos.y}")
         self.hits.append(pos)
 
     def __repr__(self) -> str:

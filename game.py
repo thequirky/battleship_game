@@ -25,7 +25,7 @@ def can_place_ship_on_position(ship: Ship, board: Board, pos: Position, orientat
     has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
     return has_no_obstacles
 
-def place_ship_randomly(ship: Ship, board: Board, pos: Position, orientation: Orientation) -> None:
+def place_ship_randomly(ship: Ship, board: Board) -> None:
     while True:
         pos = Position(random.randint(0, board.size - 1), random.randint(0, board.size - 1))
         orientation = random.choice(list(Orientation))
@@ -43,7 +43,7 @@ class Game:
 
     def place_all_ships(self) -> None:
         for ship in self.ships:
-            place_ship_randomly(ship)
+            place_ship_randomly(ship=ship, board=self.board)
 
     def get_valid_guess(self) -> Position:
         while True:

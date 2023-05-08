@@ -1,7 +1,8 @@
 import random
 
 from board import Board, Cell
-from ship import Orientation, Position, Ship, SHIP_TYPES
+from position import Orientation, Position
+from ship import Ship, SHIP_TYPES
 
 
 def place_ship_on_position(ship: Ship, pos: Position, board: Board, orientation: Orientation) -> None:

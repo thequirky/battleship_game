@@ -1,11 +1,6 @@
 from enum import StrEnum, auto
 
-from board import Position
-
-
-class Orientation(StrEnum):
-    HORIZONTAL = auto()
-    VERTICAL = auto()
+from position import Position
 
 
 class ShipType(StrEnum):

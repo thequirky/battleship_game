@@ -1,10 +1,9 @@
-from collections import namedtuple
 from enum import Enum
+
+from position import Position
 
 SPACE = " "
 GAP = 2 * SPACE
-
-Position = namedtuple("Position", "x y")
 
 
 class Cell(Enum):

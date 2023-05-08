@@ -42,6 +42,9 @@ class Board:
             brd_str += "\n" + row
         return brd_str
 
+    def __repr__(self):
+        return f"Board(size={self.size}, grid={self.grid})"
+
 
 if __name__ == "__main__":
     brd = Board(size=10)

@@ -1,14 +1,14 @@
-from enum import Enum, auto
+from enum import StrEnum, auto
 
-from board import Board, Position, Cell
+from board import Position
 
 
-class Orientation(Enum):
+class Orientation(StrEnum):
     HORIZONTAL = auto()
     VERTICAL = auto()
 
 
-class ShipType(Enum):
+class ShipType(StrEnum):
     Carrier = auto()
     Battleship = auto()
     Cruiser = auto()
@@ -28,32 +28,11 @@ SHIP_TYPES = SHIP_TYPE_TO_SIZE.keys()
 
 
 class Ship:
-    def __init__(self, type: Enum):
+    def __init__(self, type: StrEnum):
         self.type = type
         self.size = SHIP_TYPE_TO_SIZE[type]
         self.coords: list[Position] = []
         self.hits: list[Position] = []
-
-    def place(self, pos: Position, board: Board, orientation: Orientation) -> None:
-        if orientation == Orientation.HORIZONTAL:
-            positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
-        else:
-            positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
-        for p in positions:
-            board.set_value(p, self.type.value)
-            self.coords.append(p)
-
-    def can_place(self, board: Board, pos: Position, orientation: Orientation) -> bool:
-        can_fit_vertically = pos.x + self.size < board.size
-        can_fit_horizontally = pos.y + self.size < board.size
-        if orientation == Orientation.VERTICAL and can_fit_vertically:
-            positions = [Position(pos.x + i, pos.y) for i in range(self.size)]
-        elif orientation == Orientation.HORIZONTAL and can_fit_horizontally:
-            positions = [Position(pos.x, pos.y + i) for i in range(self.size)]
-        else:
-            return False
-        has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
-        return has_no_obstacles
 
     def is_sunk(self):
         return len(self.hits) == self.size

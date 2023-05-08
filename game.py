@@ -1,12 +1,34 @@
 import random
 
-from board import Board, BOARD_SIZE, Cell
+from board import BOARD_SIZE, Board, Cell
 from ship import Orientation, Position, Ship, SHIP_TYPES
+
+
+def place_ship_on_board(ship: Ship, pos: Position, board: Board, orientation: Orientation) -> None:
+    if orientation == Orientation.HORIZONTAL:
+        positions = [Position(pos.x, pos.y + i) for i in range(ship.size)]
+    else:
+        positions = [Position(pos.x + i, pos.y) for i in range(ship.size)]
+    for p in positions:
+        board.set_value(p, ship.type.value)
+        ship.coords.append(p)
+
+def can_place_ship_on_board(ship: Ship, board: Board, pos: Position, orientation: Orientation) -> bool:
+    can_fit_vertically = pos.x + ship.size < board.size
+    can_fit_horizontally = pos.y + ship.size < board.size
+    if orientation == Orientation.VERTICAL and can_fit_vertically:
+        positions = [Position(pos.x + i, pos.y) for i in range(ship.size)]
+    elif orientation == Orientation.HORIZONTAL and can_fit_horizontally:
+        positions = [Position(pos.x, pos.y + i) for i in range(ship.size)]
+    else:
+        return False
+    has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
+    return has_no_obstacles
 
 
 class Game:
     def __init__(self) -> None:
-        self.guessed_coords: list[Position] = []
+        self.already_guessed: list[Position] = []
         self.board = Board()
         self.ships = [Ship(type) for type in SHIP_TYPES]
         self.place_all_ships()
@@ -19,18 +41,17 @@ class Game:
         while True:
             pos = Position(random.randint(0, 9), random.randint(0, 9))
             orientation = random.choice(list(Orientation))
-
-            if ship.can_place(self.board, pos, orientation):
-                ship.place(pos=pos, board=self.board, orientation=orientation)
+            if can_place_ship_on_board(ship=ship, board=self.board, pos=pos, orientation=orientation):
+                place_ship_on_board(ship=ship, pos=pos, board=self.board, orientation=orientation)
                 break
 
-    def get_valid_guess(self, already_guessed: list) -> Position:
+    def get_valid_guess(self) -> Position:
         while True:
             x = input('Enter your row guess: ')
             y = input('Enter your column guess: ')
             x, y = int(x), int(y)
             guess = Position(x, y)
-            if guess in already_guessed:
+            if guess in self.already_guessed:
                 print('You already guessed that, try again')
             elif x > BOARD_SIZE - 1 or y > BOARD_SIZE - 1:
                 print('Invalid guess, try again')
@@ -52,15 +73,12 @@ class Game:
         return msg
 
     def run(self) -> None:
-
         print(self.board)
-
         while True:
-            guess = self.get_valid_guess(self.guessed_coords)
-            self.guessed_coords.append(guess)
+            guess = self.get_valid_guess()
+            self.already_guessed.append(guess)
             print(self.process_guess(guess))
             print(self.board)
-
             if all(ship.is_sunk() for ship in self.ships):
                 print('Congratulations! You have sunk all the ships!')
                 break

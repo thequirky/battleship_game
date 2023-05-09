@@ -7,8 +7,8 @@ from ship import Ship
 
 def place_ship_on_position(
     ship: Ship,
-    pos: Position,
     board: Board,
+    pos: Position,
     orientation: Orientation
 ) -> None:
     if orientation == Orientation.HORIZONTAL:
@@ -34,9 +34,7 @@ def can_place_ship_on_position(
         positions = [Position(pos.x, pos.y + i) for i in range(ship.size)]
     else:
         return False
-    has_no_obstacles = all(
-        board.get_value(pos) == Cell.EMPTY for pos in positions
-    )
+    has_no_obstacles = all(board.get_value(pos) == Cell.EMPTY for pos in positions)
     return has_no_obstacles
 
 
@@ -47,16 +45,6 @@ def place_ship_randomly(ship: Ship, board: Board) -> None:
             y=random.randint(0, board.size - 1)
         )
         orientation = random.choice(list(Orientation))
-        if can_place_ship_on_position(
-            ship=ship, 
-            board=board, 
-            pos=pos, 
-            orientation=orientation
-        ):
-            place_ship_on_position(
-                ship=ship, 
-                pos=pos, 
-                board=board, 
-                orientation=orientation
-            )
+        if can_place_ship_on_position(ship, board, pos, orientation):
+            place_ship_on_position(ship, board, pos, orientation)
             break

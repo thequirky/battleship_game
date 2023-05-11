@@ -17,6 +17,9 @@ class Board:
         self.size = size
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
+    def reset(self) -> None:
+        self.grid = [[Cell.EMPTY for _ in range(self.size)] for _ in range(self.size)]
+
     def get_value(self, pos: Position) -> Cell:
         return self.grid[pos.x][pos.y]
 
@@ -43,6 +46,6 @@ class Board:
 
 if __name__ == "__main__":
     brd = Board(size=10)
-    pos = Position(3, 3)
-    brd.set_value(pos, Cell.HIT)
+    pos = Position(x=3, y=3)
+    brd.set_value(pos=pos, value=Cell.HIT)
     print(brd)

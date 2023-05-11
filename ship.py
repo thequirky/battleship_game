@@ -48,5 +48,5 @@ class Ship:
 
 
 if __name__ == "__main__":
-    ship = Ship(ShipType.Battleship)
+    ship = Ship(type=ShipType.Battleship)
     print(ship)

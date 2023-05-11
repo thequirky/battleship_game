@@ -17,7 +17,7 @@ class Game:
     @classmethod
     def from_ships(cls, ships: list[Ship]) -> Game:
         game = Game()
-        game.board = Board()
+        game.board.reset()
         game.ships = ships
         game.place_all_ships()            
         return game
@@ -58,13 +58,12 @@ def main():
     game = Game()
     game.run()
 
-    # alternative method:
     # from ship import ShipType
 
     # ships = [
     #     Ship(ShipType.Carrier),
     #     Ship(ShipType.Cruiser),
-    #     Ship(ShipType.Battleship)
+    #     Ship(ShipType.Battleship),
     # ]
     # game = Game.from_ships(ships)
     # game.run()

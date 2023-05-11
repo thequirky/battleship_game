@@ -12,6 +12,14 @@ class Game:
         self.ships = [Ship(type) for type in SHIP_TYPES]
         self.place_all_ships()
 
+    @classmethod
+    def from_ships(cls, ships: list[Ship]) -> Ship:
+        game = Game()
+        game.board = Board()
+        game.ships = ships
+        game.place_all_ships()            
+        return game
+
     def place_all_ships(self) -> None:
         for ship in self.ships:
             place_ship_randomly(ship=ship, board=self.board)
@@ -47,6 +55,17 @@ class Game:
 def main():
     game = Game()
     game.run()
+
+    # alternative method:
+    # from ship import ShipType
+
+    # ships = [
+    #     Ship(ShipType.Carrier),
+    #     Ship(ShipType.Cruiser),
+    #     Ship(ShipType.Battleship)
+    # ]
+    # game = Game.from_ships(ships)
+    # game.run()
 
 
 if __name__ == '__main__':

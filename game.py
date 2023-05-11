@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from board import Board, Cell
 from input import get_valid_guess
 from placement import place_ship_randomly
@@ -13,7 +15,7 @@ class Game:
         self.place_all_ships()
 
     @classmethod
-    def from_ships(cls, ships: list[Ship]) -> Ship:
+    def from_ships(cls, ships: list[Ship]) -> Game:
         game = Game()
         game.board = Board()
         game.ships = ships

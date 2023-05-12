@@ -20,25 +20,24 @@ class Game:
 
     def process_hit(self, ship: Ship, guess: Position) -> None:
         ship.add_hit(guess)
-        self.board.set_value(guess, Cell.HIT)
+        self.board.set_value(pos=guess, value=Cell.HIT)
 
     def process_miss(self, guess: Position) -> None:
-        self.board.set_value(guess, Cell.MISS)
+        self.board.set_value(pos=guess, value=Cell.MISS)
 
     def all_sunk(self) -> bool:
         return all(ship.is_sunk() for ship in self.ships)
 
-    def process_guess(self, guess: Position) -> str:
+    def process_guess(self, guess: Position) -> None:
         if self.board.is_empty(guess):
             self.process_miss(guess)
-            return "Miss!"
+            print("Miss!")
         for ship in self.ships:
             if ship.is_hit(guess):
                 self.process_hit(guess=guess, ship=ship)
-                msg = 'Hit!\n'
+                print('Hit!')
                 if ship.is_sunk():
-                    msg += f'{ship.type.name} has been sunk!'
-        return msg
+                    print(f'{ship.type.name} has been sunk!')
 
     def run(self) -> None:
         print(self.board)
@@ -48,7 +47,7 @@ class Game:
                 previous_guesses=self.previous_guesses
             )
             self.previous_guesses.append(guess)
-            print(self.process_guess(guess))
+            self.process_guess(guess)
             print(self.board)
             if self.all_sunk():
                 print('Congratulations! You have sunk all the ships!')

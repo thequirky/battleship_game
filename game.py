@@ -31,6 +31,9 @@ class Game:
                     msg += f'{ship.type.name} has been sunk!'
         return msg
 
+    def all_sunk(self) -> bool:
+        return all(ship.is_sunk() for ship in self.ships)
+
     def run(self) -> None:
         print(self.board)
         while True:
@@ -41,8 +44,7 @@ class Game:
             self.previous_guesses.append(guess)
             print(self.process_guess(guess))
             print(self.board)
-            all_sunk = all(ship.is_sunk() for ship in self.ships)
-            if all_sunk:
+            if self.all_sunk():
                 print('Congratulations! You have sunk all the ships!')
                 break
 

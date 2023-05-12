@@ -7,7 +7,7 @@ from placement import place_ship_on_position
 
 def main():
     game = Game()
-    game.board = Board()
+    game.board.reset()
     game.ships = [
         Ship(ShipType.Carrier),
         Ship(ShipType.Cruiser),

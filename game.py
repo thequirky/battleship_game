@@ -8,19 +8,11 @@ from ship import Ship, SHIP_TYPES
 
 
 class Game:
-    def __init__(self) -> None:
+    def __init__(self, ships: list[Ship] = None) -> None:
         self.already_guessed: list[Position] = []
         self.board = Board()
-        self.ships = [Ship(type) for type in SHIP_TYPES]
+        self.ships = [Ship(type) for type in SHIP_TYPES] if ships is None else ships
         self.place_all_ships()
-
-    @classmethod
-    def from_ships(cls, ships: list[Ship]) -> Game:
-        game = Game()
-        game.board.reset()
-        game.ships = ships
-        game.place_all_ships()            
-        return game
 
     def place_all_ships(self) -> None:
         for ship in self.ships:
@@ -65,7 +57,7 @@ def main():
     #     Ship(ShipType.Cruiser),
     #     Ship(ShipType.Battleship),
     # ]
-    # game = Game.from_ships(ships)
+    # game = Game(ships=ships)
     # game.run()
 
 

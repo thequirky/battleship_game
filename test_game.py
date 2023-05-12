@@ -1,4 +1,3 @@
-from board import Board
 from game import Game
 from position import Position, Orientation
 from ship import Ship, ShipType

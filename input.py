@@ -18,7 +18,11 @@ def get_valid_guess(board_size: int, already_guessed: list[Position]) -> Positio
         guess = Position(x, y)
         if guess in already_guessed:
             print('You already guessed that, try again')
-        elif x > board_size - 1 or y > board_size - 1:
-            print('Invalid guess, try again')
+        elif not is_inside(pos=guess, board_size=board_size):
+            print('Guess not inside the board, try again')
         else:
             return guess
+
+
+def is_inside(pos: Position, board_size: int) -> bool:
+    return pos.x < board_size and pos.y < board_size

@@ -9,7 +9,7 @@ from ship import Ship, SHIP_TYPES
 
 class Game:
     def __init__(self, ships: list[Ship] = None) -> None:
-        self.already_guessed: list[Position] = []
+        self.previous_guesses: list[Position] = []
         self.board = Board()
         self.ships = [Ship(type) for type in SHIP_TYPES] if ships is None else ships
         self.place_all_ships()
@@ -36,9 +36,9 @@ class Game:
         while True:
             guess = get_valid_guess(
                 board_size=self.board.size,
-                already_guessed=self.already_guessed
+                previous_guesses=self.previous_guesses
             )
-            self.already_guessed.append(guess)
+            self.previous_guesses.append(guess)
             print(self.process_guess(guess))
             print(self.board)
             all_sunk = all(ship.is_sunk() for ship in self.ships)

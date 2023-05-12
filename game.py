@@ -41,7 +41,8 @@ class Game:
             self.already_guessed.append(guess)
             print(self.process_guess(guess))
             print(self.board)
-            if all(ship.is_sunk() for ship in self.ships):
+            all_sunk = all(ship.is_sunk() for ship in self.ships)
+            if all_sunk:
                 print('Congratulations! You have sunk all the ships!')
                 break
 
@@ -51,7 +52,7 @@ def main():
     game.run()
 
     # from ship import ShipType
-
+    #
     # ships = [
     #     Ship(ShipType.Carrier),
     #     Ship(ShipType.Cruiser),

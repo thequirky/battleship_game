@@ -44,7 +44,7 @@ class Ship:
         return f"Ship(type={self.type}, size={self.size}, coords={self.coords}, hits={self.hits})"
 
     def __str__(self) -> str:
-        return self.type.name[0]
+        return self.type.name
 
 
 if __name__ == "__main__":

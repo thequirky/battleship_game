@@ -37,7 +37,7 @@ class Game:
                 self.process_hit(guess=guess, ship=ship)
                 print('Hit!')
                 if ship.is_sunk():
-                    print(f'{ship.type.name} has been sunk!')
+                    print(f'{ship} has been sunk!')
 
     def run(self) -> None:
         print(self.board)

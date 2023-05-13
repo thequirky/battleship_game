@@ -52,22 +52,3 @@ class Game:
             if self.all_sunk():
                 print('Congratulations! You have sunk all the ships!')
                 break
-
-
-def main():
-    game = Game()
-    game.run()
-
-    # from ship import ShipType
-    #
-    # ships = [
-    #     Ship(ShipType.Carrier),
-    #     Ship(ShipType.Cruiser),
-    #     Ship(ShipType.Battleship),
-    # ]
-    # game = Game(ships=ships)
-    # game.run()
-
-
-if __name__ == '__main__':
-    main()

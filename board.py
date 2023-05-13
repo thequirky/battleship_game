@@ -17,7 +17,7 @@ class Board:
         self.size = size
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
-    def reset(self) -> None:
+    def _reset(self) -> None:
         self.__init__()
 
     def get_value(self, pos: Position) -> Cell:

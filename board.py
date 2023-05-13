@@ -18,7 +18,7 @@ class Board:
         self.grid = [[Cell.EMPTY for _ in range(size)] for _ in range(size)]
 
     def reset(self) -> None:
-        self.grid = [[Cell.EMPTY for _ in range(self.size)] for _ in range(self.size)]
+        self.__init__()
 
     def get_value(self, pos: Position) -> Cell:
         return self.grid[pos.x][pos.y]
@@ -42,6 +42,14 @@ class Board:
                     row += Cell.EMPTY.value + SPACE
             brd_str += "\n" + row
         return brd_str
+
+    def _show_board(self) -> None:
+        for row in self.grid:
+            row_items = [
+                cell[0].upper() if isinstance(cell, str) else cell.name[0] for cell in row
+            ]
+            print(" ".join(row_items))
+        print('\n')
 
 
 if __name__ == "__main__":

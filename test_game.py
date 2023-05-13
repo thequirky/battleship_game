@@ -30,8 +30,7 @@ def main():
         board=game.board,
         orientation=Orientation.HORIZONTAL
     )
-    for row in range(game.board.size):
-        print(game.board.grid[row])
+    game.board._show_board()
     game.run()
 
 

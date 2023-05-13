@@ -18,23 +18,23 @@ class Game:
         for ship in self.ships:
             place_ship_randomly(ship=ship, board=self.board)
 
-    def process_hit(self, ship: Ship, guess: Position) -> None:
-        ship.add_hit(guess)
-        self.board.set_value(pos=guess, value=Cell.HIT)
+    def process_hit(self, ship: Ship, pos: Position) -> None:
+        ship.add_hit(pos)
+        self.board.set_value(pos=pos, value=Cell.HIT)
 
-    def process_miss(self, guess: Position) -> None:
-        self.board.set_value(pos=guess, value=Cell.MISS)
+    def process_miss(self, pos: Position) -> None:
+        self.board.set_value(pos=pos, value=Cell.MISS)
 
     def all_sunk(self) -> bool:
         return all(ship.is_sunk() for ship in self.ships)
 
-    def process_guess(self, guess: Position) -> None:
-        if self.board.is_empty(guess):
-            self.process_miss(guess)
+    def process_guess(self, pos: Position) -> None:
+        if self.board.is_empty(pos):
+            self.process_miss(pos)
             print("Miss!")
         for ship in self.ships:
-            if ship.is_hit(guess):
-                self.process_hit(guess=guess, ship=ship)
+            if ship.is_hit(pos):
+                self.process_hit(pos=pos, ship=ship)
                 print('Hit!')
                 if ship.is_sunk():
                     print(f'{ship} has been sunk!')

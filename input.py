@@ -16,7 +16,7 @@ def get_valid_guess(board_size: int, previous_guesses: list[Position]) -> Positi
         x = get_number('Enter your row guess: ')
         y = get_number('Enter your column guess: ')
         guess = Position(x, y)
-        if already_guessed(guess=guess, previous_guesses=previous_guesses):
+        if already_guessed(pos=guess, previous_guesses=previous_guesses):
             print('You already guessed that, try again')
         elif not is_inside(pos=guess, board_size=board_size):
             print('Guess not inside the board, try again')
@@ -24,8 +24,8 @@ def get_valid_guess(board_size: int, previous_guesses: list[Position]) -> Positi
             return guess
 
 
-def already_guessed(guess: Position, previous_guesses: list[Position]) -> bool:
-    return guess in previous_guesses
+def already_guessed(pos: Position, previous_guesses: list[Position]) -> bool:
+    return pos in previous_guesses
 
 
 def is_inside(pos: Position, board_size: int) -> bool:

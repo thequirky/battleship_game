@@ -31,16 +31,11 @@ class Board:
 
     def __str__(self) -> str:
         brd_str = GAP + SPACE.join(str(idx) for idx in range(self.size))
-        for x in range(self.size):
-            row = str(x) + SPACE
-            for y in range(self.size):
-                pos = Position(x, y)
-                cell_value = self.get_value(pos)
-                if cell_value == Cell.EMPTY or cell_value in [Cell.HIT, Cell.MISS]:
-                    row += cell_value.value + SPACE
-                else:
-                    row += Cell.EMPTY.value + SPACE
-            brd_str += "\n" + row
+        for row_nb, row in enumerate(self.grid):
+            row_str = str(row_nb) + SPACE
+            for cell in row:
+                row_str += cell.value if cell in [Cell.HIT, Cell.MISS] else Cell.EMPTY.value + SPACE
+            brd_str += "\n" + row_str
         return brd_str
 
     def _show_board(self) -> None:
@@ -53,7 +48,7 @@ class Board:
 
 
 if __name__ == "__main__":
-    brd = Board(size=10)
-    pos = Position(x=3, y=3)
-    brd.set_value(pos=pos, value=Cell.HIT)
+    brd = Board()
+    brd.set_value(pos=Position(x=4, y=2), value=Cell.HIT)
+    brd.set_value(pos=Position(x=6, y=9), value=Cell.MISS)
     print(brd)

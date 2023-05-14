@@ -15,10 +15,10 @@ class Cell(Enum):
 class Board:
     def __init__(self, size: int = 10) -> None:
         self.size = size
-        self.grid = self.reset()
+        self.grid = [[Cell.EMPTY for _ in range(self.size)] for _ in range(self.size)]
 
-    def reset(self) -> list[Cell]:
-        return [[Cell.EMPTY for _ in range(self.size)] for _ in range(self.size)]
+    def reset(self) -> None:
+        self.__init__(size=self.size)
 
     def get_value(self, pos: Position) -> Cell:
         return self.grid[pos.x][pos.y]

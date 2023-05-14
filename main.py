@@ -8,7 +8,7 @@ def default_game():
     return Game()
 
 
-def custom_game_example():
+def custom_game():
     print("Playing custom game.")
 
     from ship import ShipType
@@ -22,7 +22,7 @@ def custom_game_example():
 
 
 def main(default: bool = True):
-    game = default_game() if default else custom_game_example()
+    game = default_game() if default else custom_game()
     game.run()
 
 

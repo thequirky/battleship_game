@@ -31,16 +31,16 @@ class Board:
 
     def __str__(self) -> str:
         header = GAP + SPACE.join(str(idx) for idx in range(self.size))
-        board_str = header
+        board_repr = header
         for row_nb, row in enumerate(self.grid):
             prefix = str(row_nb)
             cell_reprs = [
                 cell.value if cell in [Cell.HIT, Cell.MISS] else Cell.EMPTY.value 
                 for cell in row
             ]
-            row_str = SPACE.join([prefix] + cell_reprs)
-            board_str += "\n" + row_str
-        return board_str
+            row_repr = SPACE.join([prefix] + cell_reprs)
+            board_repr += "\n" + row_repr
+        return board_repr
 
     def _show_board(self) -> None:
         for row in self.grid:

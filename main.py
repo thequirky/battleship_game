@@ -1,21 +1,21 @@
-
-from game import Game
-from ship import Ship
-
-
 def default_game():
+    from game import Game
+
     print("Playing default game.")
     return Game()
 
 
 def custom_game():
-    print("Playing custom game.")
+    from game import Game
+    from ship import Ship, ShipType
 
-    from ship import ShipType
-    
+    print("Playing custom game.")
     ships = [
         Ship(ShipType.Carrier),
+        Ship(ShipType.Carrier),
         Ship(ShipType.Cruiser),
+        Ship(ShipType.Cruiser),
+        Ship(ShipType.Battleship),
         Ship(ShipType.Battleship),
     ]
     return Game(ships=ships)

@@ -53,6 +53,6 @@ class Board:
 
 if __name__ == "__main__":
     brd = Board()
-    brd.set_value(pos=Position(x=4, y=2), value=Cell.HIT)
-    brd.set_value(pos=Position(x=6, y=9), value=Cell.MISS)
+    brd.set_value(pos=Position(x=4, y=4), value=Cell.HIT)
+    brd.set_value(pos=Position(x=5, y=5), value=Cell.MISS)
     print(brd)

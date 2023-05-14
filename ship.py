@@ -45,8 +45,3 @@ class Ship:
 
     def __str__(self) -> str:
         return self.type.name
-
-
-if __name__ == "__main__":
-    ship = Ship(type=ShipType.Battleship)
-    print(ship)

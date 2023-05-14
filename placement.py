@@ -15,9 +15,9 @@ def place_ship_on_position(
         positions = [Position(pos.x, pos.y + i) for i in range(ship.size)]
     else:
         positions = [Position(pos.x + i, pos.y) for i in range(ship.size)]
-    for p in positions:
-        board.set_value(p, ship.type.value)
-        ship.coords.append(p)
+    for pos in positions:
+        board.set_value(pos, ship.type.value)
+        ship.coords.append(pos)
 
 
 def can_place_ship_on_position(

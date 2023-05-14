@@ -30,13 +30,17 @@ class Board:
         return self.get_value(guess) == Cell.EMPTY
 
     def __str__(self) -> str:
-        brd_str = GAP + SPACE.join(str(idx) for idx in range(self.size))
+        header = GAP + SPACE.join(str(idx) for idx in range(self.size))
+        board_str = header
         for row_nb, row in enumerate(self.grid):
-            row_str = str(row_nb) + SPACE
-            for cell in row:
-                row_str += cell.value if cell in [Cell.HIT, Cell.MISS] else Cell.EMPTY.value + SPACE
-            brd_str += "\n" + row_str
-        return brd_str
+            prefix = str(row_nb)
+            cell_reprs = [
+                cell.value if cell in [Cell.HIT, Cell.MISS] else Cell.EMPTY.value 
+                for cell in row
+            ]
+            row_str = SPACE.join([prefix] + cell_reprs)
+            board_str += "\n" + row_str
+        return board_str
 
     def _show_board(self) -> None:
         for row in self.grid:

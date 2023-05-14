@@ -31,7 +31,7 @@ class Board:
 
     def __str__(self) -> str:
         header = GAP + SPACE.join(str(idx) for idx in range(self.size))
-        board_repr = header
+        rows = [header]
         for row_nb, row in enumerate(self.grid):
             prefix = str(row_nb)
             cell_values = [
@@ -39,8 +39,8 @@ class Board:
                 for cell in row
             ]
             row_repr = SPACE.join([prefix] + cell_values)
-            board_repr += "\n" + row_repr
-        return board_repr
+            rows.append(row_repr)
+        return "\n".join(rows)
 
     def _show_board(self) -> None:
         for row in self.grid:

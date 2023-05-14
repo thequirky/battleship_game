@@ -34,11 +34,11 @@ class Board:
         board_repr = header
         for row_nb, row in enumerate(self.grid):
             prefix = str(row_nb)
-            cell_reprs = [
+            cell_values = [
                 cell.value if cell in [Cell.HIT, Cell.MISS] else Cell.EMPTY.value 
                 for cell in row
             ]
-            row_repr = SPACE.join([prefix] + cell_reprs)
+            row_repr = SPACE.join([prefix] + cell_values)
             board_repr += "\n" + row_repr
         return board_repr
 

@@ -30,17 +30,16 @@ class Board:
         return self.get_value(guess) == Cell.EMPTY
 
     def __str__(self) -> str:
-        separator = 2*SPACE if self.size > 10 else SPACE
-        brd_str = SPACE + separator + separator.join(str(idx) for idx in range(self.size))
+        brd_str = GAP + SPACE.join(str(idx) for idx in range(self.size))
         for x in range(self.size):
-            row = str(x) + separator
+            row = str(x) + SPACE
             for y in range(self.size):
                 pos = Position(x, y)
                 cell_value = self.get_value(pos)
                 if cell_value == Cell.EMPTY or cell_value in [Cell.HIT, Cell.MISS]:
-                    row += cell_value.value + separator
+                    row += cell_value.value + SPACE
                 else:
-                    row += Cell.EMPTY.value + separator
+                    row += Cell.EMPTY.value + SPACE
             brd_str += "\n" + row
         return brd_str
 
